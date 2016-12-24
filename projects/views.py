@@ -1,7 +1,4 @@
-from rest_framework import viewsets, permissions
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.response import Response
-from rest_framework.status import HTTP_200_OK
+from rest_framework import mixins, viewsets, permissions
 from .serializers import ProjectSerializer, TagModelSerializer
 from .models import Project, Tag
 from .permissions import IsStaffOrReadOnly
@@ -17,9 +14,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
         serializer.save(creator=self.request.user)
 
 
-@api_view(['GET'])
-@permission_classes((permissions.AllowAny,))
-def get_tags(request):
-    if request.method == 'GET':
-        serializer = TagModelSerializer(Tag.objects.all(), many=True)
-        return Response(serializer.data, status=HTTP_200_OK)
+class TagListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    queryset = Tag.objects.all()
+    serializer_class = TagModelSerializer
+    permission_classes = (permissions.AllowAny,)
