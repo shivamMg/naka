@@ -40,7 +40,7 @@ MIDDLEWARE = [
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'hikaru.urls'
+ROOT_URLCONF = 'naka.urls'
 
 TEMPLATES = [
     {
@@ -58,7 +58,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'hikaru.wsgi.application'
+WSGI_APPLICATION = 'naka.wsgi.application'
 
 
 DATABASES = {
