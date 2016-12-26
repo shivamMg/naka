@@ -26,6 +26,17 @@
    }
    ```
 
+   You can also add a whitelist of hostnames for CORS in the same file.
+   ```json
+   {
+       "secret_key": "super-secret-key",
+       "cors_origin_whitelist": [
+           "127.0.0.1:3000",
+           "localhost:3000"
+       ]
+   }
+   ```
+
 5. Migrate and create a super user.
    ```bash
    ./manage.py migrate
