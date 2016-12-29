@@ -10,6 +10,21 @@ class ProjectViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsStaffOrReadOnly,)
 
+    def get_queryset(self):
+        """
+        Update queryset for `approved` query param.
+        """
+        queryset = Project.objects.all()
+        approved = self.request.query_params.get('approved', None)
+
+        if approved is not None:
+            if approved == 'true':
+                queryset = queryset.filter(approved=True)
+            elif approved == 'false':
+                queryset = queryset.filter(approved=False)
+
+        return queryset
+
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
 

@@ -24,7 +24,7 @@ class ProjectSerializer(serializers.HyperlinkedModelSerializer):
         model = Project
         fields = ('url', 'id', 'name', 'description', 'sourceLink',
                   'websiteLink', 'author', 'authorLink', 'creator',
-                  'tags', 'approved', )
+                  'tags', 'approved', 'created_at', )
 
     def create(self, validated_data):
         tags_data = validated_data.pop('tags')

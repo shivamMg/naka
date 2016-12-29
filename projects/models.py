@@ -25,6 +25,7 @@ class Project(models.Model):
     author_link = models.URLField(blank=True)
 
     creator = models.ForeignKey(User)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.name
