@@ -16,7 +16,7 @@ SECRET_KEY = SECRETS.get('secret_key')
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = SECRETS.get('allowed_hosts', [])
 
 INSTALLED_APPS = [
     # 'django.contrib.admin',
@@ -119,7 +119,9 @@ JWT_AUTH = {
         'users.jwt.jwt_payload_handler',
     'JWT_ALLOW_REFRESH': True,
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
-    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=14),
 }
 
 CORS_ORIGIN_WHITELIST = SECRETS.get('cors_origin_whitelist', [])
+
+STATIC_ROOT = os.path.join(DATA_DIR, 'static_root')

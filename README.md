@@ -26,13 +26,17 @@
    }
    ```
 
-   You can also add a whitelist of hostnames for CORS in the same file.
+   You can also add a whitelist of hostnames for CORS. Allowed hosts can also be added in the same file.
    ```json
    {
        "secret_key": "super-secret-key",
        "cors_origin_whitelist": [
            "127.0.0.1:3000",
            "localhost:3000"
+       ],
+       "allowed_hosts": [
+           "0.0.0.0",
+           "localhost"
        ]
    }
    ```
@@ -48,6 +52,16 @@
    ./manage.py runserver
    ```
 
-7. Visit http://localhost:8000/api.
+7. Visit [localhost:8000/api](http://localhost:8000/api).
 
+
+#### Production Deployment
+
+Install Production requirements, and collect static files in `data/static_root` directory. Fire up gunicorn to run the application. Serve static files through a reverse proxy server.
+
+```bash
+pip install -r requirements.prod.txt
+./manage.py collectstatic
+gunicorn naka.wsgi:application --name naka --bind 0.0.0.0:8000 --workers 3
+```
 
