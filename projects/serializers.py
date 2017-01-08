@@ -55,7 +55,7 @@ class ProjectSerializer(serializers.HyperlinkedModelSerializer):
                                                instance.approved)
 
         # Remove old tags and Save new tags
-        instance.tags.all().delete()
+        instance.tags.clear()
         tags_data = validated_data.get('tags', [])
         for tag_data in tags_data:
             tag, _ = Tag.objects.get_or_create(**tag_data)
