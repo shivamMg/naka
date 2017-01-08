@@ -16,12 +16,18 @@ class ProjectViewSet(viewsets.ModelViewSet):
         """
         queryset = Project.objects.all()
         approved = self.request.query_params.get('approved', None)
+        sort = self.request.query_params.get('sort', 'created-des')
 
         if approved is not None:
             if approved == 'true':
                 queryset = queryset.filter(approved=True)
             elif approved == 'false':
                 queryset = queryset.filter(approved=False)
+
+        if sort == 'created-des':
+            queryset = queryset.order_by('-created_at')
+        elif sort == 'created-asc':
+            queryset = queryset.order_by('created_at')
 
         return queryset
 
