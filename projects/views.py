@@ -12,7 +12,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         """
-        Update queryset for `approved` query param.
+        Update queryset for `approved` and `sort` query params.
         """
         queryset = Project.objects.all()
         approved = self.request.query_params.get('approved', None)
@@ -36,6 +36,6 @@ class ProjectViewSet(viewsets.ModelViewSet):
 
 
 class TagListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    queryset = Tag.objects.all()
+    queryset = Tag.objects.order_by('name')
     serializer_class = TagModelSerializer
     permission_classes = (permissions.AllowAny,)
