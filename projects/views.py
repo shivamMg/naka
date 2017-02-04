@@ -1,7 +1,15 @@
-from rest_framework import mixins, viewsets, permissions
-from .serializers import ProjectSerializer, TagModelSerializer
-from .models import Project, Tag
-from .permissions import IsStaffOrReadOnly
+import threading
+from django.shortcuts import get_object_or_404
+from rest_framework import mixins, viewsets, permissions, generics
+
+from .serializers import (
+    ProjectSerializer,
+    TagModelSerializer,
+    PhotoSerializer
+)
+from .models import Project, Tag, Photo
+from .permissions import IsStaffOrReadOnly, IsStaff
+from .helpers import capture_screenshot
 
 
 class ProjectViewSet(viewsets.ModelViewSet):
@@ -32,7 +40,25 @@ class ProjectViewSet(viewsets.ModelViewSet):
         return queryset
 
     def perform_create(self, serializer):
-        serializer.save(creator=self.request.user)
+        project = serializer.save(creator=self.request.user)
+        # Capture screenshot for Project
+        thread = threading.Thread(target=capture_screenshot, args=(project,))
+        thread.daemon = True
+        thread.start()
+
+
+class PhotoView(generics.UpdateAPIView):
+    queryset = Photo.objects.all()
+    serializer_class = PhotoSerializer
+    permission_classes = (IsStaff,)
+
+    def get_object(self):
+        project_id = self.kwargs.get('project_id', None)
+        project = get_object_or_404(Project, id=project_id)
+
+        self.check_object_permissions(self.request, project.photo)
+
+        return project.photo
 
 
 class TagListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):

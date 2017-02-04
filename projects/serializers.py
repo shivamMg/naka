@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Project, Tag
+from .models import Project, Tag, Photo
 
 
 class TagModelSerializer(serializers.ModelSerializer):
@@ -17,6 +17,9 @@ class ProjectSerializer(serializers.HyperlinkedModelSerializer):
     sourceLink = serializers.URLField(source='source_link')
     websiteLink = serializers.URLField(source='website_link', allow_blank=True)
     authorLink = serializers.URLField(source='author_link', allow_blank=True)
+    # Use full_url property
+    photo = serializers.URLField(source='photo.full_url',
+                                 allow_blank=True, read_only=True)
     creator = serializers.ReadOnlyField(source='creator.username')
     tags = TagSerializer(many=True)
 
@@ -24,7 +27,7 @@ class ProjectSerializer(serializers.HyperlinkedModelSerializer):
         model = Project
         fields = ('url', 'id', 'name', 'description', 'sourceLink',
                   'websiteLink', 'author', 'authorLink', 'creator',
-                  'tags', 'approved', 'created_at', )
+                  'tags', 'approved', 'created_at', 'photo')
 
     def create(self, validated_data):
         tags_data = validated_data.pop('tags')
@@ -63,3 +66,9 @@ class ProjectSerializer(serializers.HyperlinkedModelSerializer):
 
         instance.save()
         return instance
+
+
+class PhotoSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Photo
+        fields = ('image',)

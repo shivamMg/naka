@@ -7,3 +7,5 @@ venv/
 db.sqlite3
 
 data/conf/
+
+ghostdriver.log

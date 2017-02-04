@@ -42,7 +42,7 @@ MIDDLEWARE = [
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'naka.urls'
+ROOT_URLCONF = 'naka.urls.common'
 
 TEMPLATES = [
     {
@@ -99,6 +99,7 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
 
 AUTH_USER_MODEL = 'users.User'
 
@@ -125,3 +126,6 @@ JWT_AUTH = {
 CORS_ORIGIN_WHITELIST = SECRETS.get('cors_origin_whitelist', [])
 
 STATIC_ROOT = os.path.join(DATA_DIR, 'static_root')
+MEDIA_ROOT = os.path.join(DATA_DIR, 'media_root')
+
+SERVER_NAME = SECRETS.get('server_name', '')

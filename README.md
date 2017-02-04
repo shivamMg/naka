@@ -1,5 +1,10 @@
 ### naka
 
+#### Dependencies
+
+[Phantomjs](http://phantomjs.org) is required for capturing screenshots of Project Websites. You may download and install it from [here](http://phantomjs.org/download.html). Create `data/media_root` directory for storing media assets. With `DEBUG` as `True`, these assets will be served by the development server. On production, serve them separately through a proxy server. `server_name` in `data/conf/secrets.json` can be set to generate full image URL.
+
+
 #### Development Instructions
 
 1. `cd` into the project directory and create a virtual environment.
@@ -26,7 +31,7 @@
    }
    ```
 
-   You can also add a whitelist of hostnames for CORS. Allowed hosts can also be added in the same file.
+   You can also add a whitelist of hostnames for CORS. Allowed hosts and Server name can also be added in the same file.
    ```json
    {
        "secret_key": "super-secret-key",
@@ -37,7 +42,8 @@
        "allowed_hosts": [
            "0.0.0.0",
            "localhost"
-       ]
+       ],
+       "server_name": "http://localhost:8000"
    }
    ```
 

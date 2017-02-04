@@ -1,5 +1,6 @@
 from django.db import models
 
+from naka.settings.common import SERVER_NAME
 from users.models import User
 
 
@@ -29,3 +30,15 @@ class Project(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Photo(models.Model):
+    project = models.OneToOneField(Project, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='projects/')
+
+    @property
+    def full_url(self):
+        return '{}{}'.format(SERVER_NAME, self.image.url)
+
+    def __str__(self):
+        return self.image
