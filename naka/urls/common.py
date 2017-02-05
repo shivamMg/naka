@@ -16,5 +16,5 @@ router.register(r'users', UserCreateViewSet)
 urlpatterns = [
     url(r'^api/', include(router.urls)),
     url(r'^api/projects/(?P<project_id>[0-9]+)/photo/$', PhotoView.as_view()),
-    url(r'^auth/', include('naka.auth_urls')),
+    url(r'^auth/', include('naka.urls.auth')),
 ]

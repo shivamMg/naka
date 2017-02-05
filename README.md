@@ -1,5 +1,8 @@
 ### naka
 
+API Server for [Hikaru](https://github.com/shivammg/hikaru).
+
+
 #### Dependencies
 
 [Phantomjs](http://phantomjs.org) is required for capturing screenshots of Project Websites. You may download and install it from [here](http://phantomjs.org/download.html). Create `data/media_root` directory for storing media assets. With `DEBUG` as `True`, these assets will be served by the development server. On production, serve them separately through a proxy server. `server_name` in `data/conf/secrets.json` can be set to generate full image URL.
